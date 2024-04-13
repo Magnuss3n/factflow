@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Z Scroll</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            /* Black background */
+            color: #fff;
+            /* White text */
+            overflow: hidden;
+            /* Hide overflow to prevent scrolling */
+        }
+
+        .mobile-video {
+            position: absolute;
+            width: 360px;
+            /* Reduced width of the phone */
+            height: 700px;
+            /* Reduced height of the phone */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #000;
+            /* Black background */
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+            /* Hide overflowing content */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 30px;
+            /* Rounded corners */
+        }
+
+        /* Arrow styles */
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            /* Semi-transparent white */
+            color: #fff;
+            /* White color for arrows */
+            text-align: center;
+            line-height: 40px;
+            cursor: pointer;
+        }
+
+        .up-arrow {
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: -320px;
+            /* Position the up arrow above the phone */
+        }
+
+        .down-arrow {
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 280px;
+            /* Position the down arrow below the phone */
+        }
+
+        #videoContainer {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 30px;
+            /* Curved edges */
+        }
+
+        .logo-left {
+            position: absolute;
+            top: 20px;
+            /* Adjust top spacing as needed */
+            left: 20px;
+            /* Adjust left spacing as needed */
+            z-index: 999;
+            /* Ensure the logo is above other elements */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="logo-right">
+        <img src="images/ZNEWS.jpg" alt="Logo" width="300" height="200">
+
+    </div>
+    <div class="mobile-video" id="videoContainer">
+        <video id="video" autoplay loop>
+            <!-- Add your video source here -->
+            <source src="images/v1.mp4" type="video/mp4" width="360" height="700">
+        </video>
+    </div>
+    <div class="arrow up-arrow" onclick="scrollVideo(-1)">↑</div>
+    <div class="arrow down-arrow" onclick="scrollVideo(1)">↓</div>
+    <script>
+        let currentVideoIndex = 0;
+        const videos = [
+            { src: 'images/v1.mp4', width: 360, height: 700 },
+            { src: 'images/v2.mp4', width: 360, height: 700 },
+            { src: 'images/v3.mp4', width: 360, height: 700 },
+            { src: 'images/v4.mp4', width: 360, height: 700 },
+            { src: 'images/v5.mp4', width: 360, height: 700 },
+
+            // Add more video sources here
+        ];
+
+        function scrollVideo(direction) {
+            currentVideoIndex += direction;
+            if (currentVideoIndex < 0) {
+                currentVideoIndex = videos.length - 1;
+            } else if (currentVideoIndex >= videos.length) {
+                currentVideoIndex = 0;
+            }
+
+            const video = document.getElementById('video');
+            video.src = videos[currentVideoIndex].src;
+            video.width = videos[currentVideoIndex].width;
+            video.height = videos[currentVideoIndex].height;
+            video.play();
+        }
+
+        // Keyboard arrow navigation
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowUp') {
+                scrollVideo(-1); // Scroll up
+            } else if (event.key === 'ArrowDown') {
+                scrollVideo(1); // Scroll down
+            }
+        });
+    </script>
+</body>
+
+</html>
